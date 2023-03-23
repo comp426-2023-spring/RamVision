@@ -1,33 +1,51 @@
 <div class="header">
-    <h1>RamVision</h1>
+  <h1>RamVision</h1>
+  <div class="buttons">
+    <button class="button-primary" routerLink="/submissionform" (click)="logMessage()">Grade Submission Form</button>
+    <a class="button-secondary" href="https://docs.google.com/forms/d/e/1FAIpQLSd32gSbK-K4o4btBkV7TWcb9j4iH7m5S5Xd5Em1jegEZMz_2w/viewform" target="_blank">Contact us!</a>
   </div>
-  
-  <div class="dropdowns">
-    <mat-form-field class="dropdown">
-      <mat-label>Major</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let major of majors" [value]="major">
-          {{major}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  
-    <mat-form-field class="dropdown">
-      <mat-label>Class</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let class of classes" [value]="class">
-          {{class}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  
-    <mat-form-field class="dropdown">
-      <mat-label>Professor</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let professor of professors" [value]="professor">
-          {{professor}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  
+</div>
+
+<div class="dropdowns">
+  <mat-form-field class="dropdown">
+    <mat-label>Major</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let major of majors" [value]="major">
+        {{major}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="dropdown">
+    <mat-label>Class</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let class of classes" [value]="class">
+        {{class}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="dropdown">
+    <mat-label>Professor</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let professor of professors" [value]="professor">
+        {{professor}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="dropdown">
+    <mat-label>Academic Term</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let term of terms" [value]="term">
+        {{term}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+
+<div class="query">
+  <button class="button-primary">See Grade Distribution!</button>
+</div>
+

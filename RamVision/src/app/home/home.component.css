@@ -1,13 +1,121 @@
+/* Style for the header section */
 .header {
-    text-align: center;
-  }
-  
-  .dropdowns {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #5fa5e2;
+  padding: 20px;
+  color: #fff;
+  font-family: 'Luminari', 'fantasyLuminari', 'fantasy';
+}
+
+.header h1 {
+  font-size: 36px;
+  margin: 0;
+}
+
+.header img {
+  height: 50px;
+  margin-left: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.buttons button,
+.buttons a {
+  margin-left: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+.buttons button {
+  font-weight: bold;
+  background-color: #0056c7;
+  border: none;
+}
+
+.buttons button:hover {
+  cursor: pointer;
+  background-color: #6dacff;
+}
+
+.buttons a {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0056c7;
+  ;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+}
+
+.buttons a:hover {
+  cursor: pointer;
+  background-color: #6dacff;
+}
+
+/* Style for the dropdown section */
+.dropdowns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
   }
   
   .dropdown {
-    width: 30%;
+  margin: 0 10px;
   }
   
+  .mat-form-field {
+  width: 200px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .mat-form-field .mat-form-field-label {
+  color: #fff;
+  }
+  
+  .mat-select-trigger {
+  color: #fff;
+  border-bottom: 1px solid #fff;
+  }
+  
+  .mat-option {
+  font-size: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .mat-option:hover {
+  background-color: #3c6eaf;
+  color: #fff;
+  }
+
+  /* Style for the query button */
+.query {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.query button {
+  background-color: #3c6eaf;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.query button:hover {
+  cursor: pointer;
+  background-color: #284b78;
+}
+
+
