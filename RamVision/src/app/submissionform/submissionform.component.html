@@ -1,1 +1,38 @@
-<p>submissionform works!</p>
+<div class="header">
+    <h1>Grade Submission Form</h1>
+  </div>
+
+<form (ngSubmit)="submitForm()" #submissionForm="ngForm">
+    <div class="form-group">
+      <label for="class">Class:</label>
+      <input type="text" class="form-control" id="class" name="class" required [(ngModel)]="formData.class">
+    </div>
+    <div class="form-group">
+      <label for="academicTerm">Academic Term:</label>
+      <select class="form-control" id="academicTerm" name="academicTerm" required [(ngModel)]="formData.academicTerm">
+        <option value="Spring">Spring</option>
+        <option value="Fall">Fall</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="year">Year:</label>
+      <select class="form-control" id="year" name="year" required [(ngModel)]="formData.year">
+        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="professor">Professor:</label>
+      <select class="form-control" id="professor" name="professor" required [(ngModel)]="formData.professor">
+        <option *ngFor="let professor of professors" [value]="professor">{{ professor }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="gradeReceived">Grade Received:</label>
+      <input type="number" class="form-control" id="gradeReceived" name="gradeReceived" required [(ngModel)]="formData.gradeReceived">
+    </div>
+    <div class="button-group">
+        <button type="home" routerLink="/home" class="btn btn-secondary">Home</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+  

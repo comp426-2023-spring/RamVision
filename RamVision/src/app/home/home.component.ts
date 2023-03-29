@@ -15,11 +15,9 @@ export class HomeComponent {
 
   constructor(private router: Router) {}
 
-  //   goToGradeSubmissionForm() {
-  //     this.router.navigateByUrl('/submissionform');
+  // tester function
+  // logMessage() {
+  //   console.log("works");
   // }
 
-  logMessage() {
-    console.log("works");
-  }
 }

@@ -1,0 +1,122 @@
+/* Style for the header section */
+.header {
+    background-color: #5fa5e2;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header h1 {
+    margin: 0;
+    font-size: 40px;
+    text-align: center;
+  }  
+  
+/* Style for the form section */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  input[type="text"],
+  select,
+  input[type="number"] {
+    border: none;
+    background-color: #f5f5f5;
+    padding: 12px 15px;
+    font-size: 16px;
+    border-radius: 6px;
+    width: 100%;
+  }
+  
+  input[type="text"]:focus,
+  select:focus,
+  input[type="number"]:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px 1px #5fa5e2;
+  }
+  
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="7"><path d="M1 1l5 5 5-5" stroke="%23333" fill="none" fill-rule="evenodd"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right center;
+  }
+  
+  select:focus {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="7"><path d="M1 1l5 5 5-5" stroke="%235fa5e2" fill="none" fill-rule="evenodd"/></svg>');
+  }
+  
+
+/* Style for the butttons section */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  button[type="home"] {
+    padding: 12px 30px;
+    background-color: #5fa5e2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button[type="home"]:hover {
+    background-color: #3d7be9;
+  }
+  
+  button[type="submit"] {
+    padding: 12px 30px;
+    background-color: #5fa5e2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #3d7be9;
+  }
+
+  /* adjust the layout to stack the buttons vertically on smaller screens */
+  @media only screen and (max-width: 768px) {
+    .button-group {
+      flex-direction: column;
+    }
+  
+    button[type="home"],
+    button[type="submit"] {
+      margin-top: 20px;
+    }
+  }
+  

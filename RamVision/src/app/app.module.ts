@@ -8,13 +8,14 @@ import { MatInputModule } from '@angular/material/input';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { SubmissionformComponent } from './submissionform/submissionform.component';
+import { SubmissionFormComponent } from './submissionform/submissionform.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SubmissionformComponent
+    SubmissionFormComponent
   ],
   imports: [
     BrowserModule,
