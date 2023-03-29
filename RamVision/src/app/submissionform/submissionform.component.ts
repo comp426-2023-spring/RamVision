@@ -26,7 +26,7 @@ export class SubmissionFormComponent {
       gradeReceived: this.formData.gradeReceived
     };
     
-    // Do something with the submission data, like send it to a server or save it in local storage
+    // Do something with the submission data
     console.log(submissionData);
   }
 }

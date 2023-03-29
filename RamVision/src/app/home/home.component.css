@@ -118,4 +118,11 @@
   background-color: #284b78;
 }
 
+  /* Style for the disclaimer */
+.note {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 

@@ -2,7 +2,7 @@
     <h1>Grade Submission Form</h1>
   </div>
 
-<form (ngSubmit)="submitForm()" #submissionForm="ngForm">
+<form (ngSubmit)="submitForm(); submissionForm.reset()" #submissionForm="ngForm">
     <div class="form-group">
       <label for="class">Class:</label>
       <input type="text" class="form-control" id="class" name="class" required [(ngModel)]="formData.class">
@@ -34,5 +34,9 @@
         <button type="home" routerLink="/home" class="btn btn-secondary">Home</button>
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
+        <!-- Display error message if form is invalid -->
+        <div id="error-message" *ngIf="submissionForm.invalid">
+          *You must fill out all fields before submitting*
+        </div>
   </form>
   

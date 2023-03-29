@@ -12,14 +12,21 @@
     margin: 0;
     font-size: 40px;
     text-align: center;
-  }  
+  }
   
-/* Style for the form section */
-form {
+  /* Style for the form section */
+  form {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 1px #ddd;
   }
   
   .form-group {
@@ -67,19 +74,21 @@ form {
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="7"><path d="M1 1l5 5 5-5" stroke="%235fa5e2" fill="none" fill-rule="evenodd"/></svg>');
   }
   
-
-/* Style for the butttons section */
-.button-group {
+  /* Style for the butttons section */
+  .button-group {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 30px;
+    max-width: 250px;
+    width: 100%;
+    margin: 0 auto;
   }
   
   button[type="home"] {
     padding: 12px 30px;
-    background-color: #5fa5e2;
-    color: #fff;
+    background-color: #e0dfdf;
+    color: #5fa5e2;
     border: none;
     border-radius: 6px;
     font-size: 16px;
@@ -89,7 +98,7 @@ form {
   }
   
   button[type="home"]:hover {
-    background-color: #3d7be9;
+    background-color: #ddd;
   }
   
   button[type="submit"] {
@@ -108,6 +117,14 @@ form {
     background-color: #3d7be9;
   }
 
+
+  /* styling for error message */
+  #error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
   /* adjust the layout to stack the buttons vertically on smaller screens */
   @media only screen and (max-width: 768px) {
     .button-group {
@@ -119,4 +136,9 @@ form {
       margin-top: 20px;
     }
   }
+
+
+  
+  
+  
   
