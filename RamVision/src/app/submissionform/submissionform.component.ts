@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-submissionform',
@@ -37,5 +38,9 @@ export class SubmissionFormComponent {
     const urlString = 'https://ramvision-ecaa0-default-rtdb.firebase.io.com/' + submissionData.year + '/' + submissionData.academicTerm + '/' + submissionData.class + '/' + submissionData.professor + '/.json'
     
     //still working on posting the grade to the above url
+    //this constructor function syntax is just copy pasted from angular docs
+    //https://angular.io/guide/http for more info
+    constructor(private http: HttpClient) {}
+    this.http.post(urlString, {'grade' : 'fail' })
   }
 }
