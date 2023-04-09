@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-submissionform',
@@ -17,6 +18,10 @@ export class SubmissionFormComponent {
     gradeReceived: null
   };
 
+  // Http client for sending requests etc.
+  constructor(private http: HttpClient) {}
+
+  // SubmitForm builds url and returns observable http req, it is called inside onSubmit
   submitForm() {
     // Create a JSON object from the form data
     const submissionData = {
@@ -27,20 +32,28 @@ export class SubmissionFormComponent {
       gradeReceived: this.formData.gradeReceived
     };
     
-    // Do something with the submission data
+    // For testing
     console.log(submissionData);
- 	
-    // in order to update the database we make the HTTP PUT call:
-    //'https://ramvision-ecaa0-default-rtdb.firebaseio.com/{year}/{academicterm}/{class}/{professor}/.json'
-    // with the following json in the data field of the PUT:
-    // { "grade" : gradeReceived}
-    // where gradeReceived is replaced with the actual data value, and so are {year}/{class}/... etc.  
-    const urlString = 'https://ramvision-ecaa0-default-rtdb.firebase.io.com/' + submissionData.year + '/' + submissionData.academicTerm + '/' + submissionData.class + '/' + submissionData.professor + '/.json'
     
-    //still working on posting the grade to the above url
-    //this constructor function syntax is just copy pasted from angular docs
-    //https://angular.io/guide/http for more info
-    constructor(private http: HttpClient) {}
-    this.http.post(urlString, {'grade' : 'fail' })
+    // Building the URL from the JSON
+    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${submissionData.year}/${submissionData.academicTerm}/${submissionData.class}/${submissionData.professor}.json`;
+
+    // Make PUT call
+    return this.http.put(url, submissionData);
   }
+
+  // onSubmit is what is tied to the front end button click, it will observe and tell us if successful or not
+  onSubmit() {
+    this.submitForm().subscribe(
+      res => {
+        console.log('Data successfully updated in Firebase!');
+        console.log(res);
+      },
+      err => {
+        console.log('Error updating data in Firebase:');
+        console.log(err);
+      }
+    );
+  }
+
 }
