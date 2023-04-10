@@ -8,52 +8,53 @@
 </div>
 
 <div class="dropdowns">
-  <mat-form-field class="dropdown">
-    <mat-label>Major</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let major of majors" [value]="major">
-        {{major}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="dropdown">
+      <mat-label>Major</mat-label>
+      <mat-select formControlName="major">
+        <mat-option *ngFor="let major of majors" [value]="major">
+          {{major}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="dropdown">
-    <mat-label>Academic Term</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let term of terms" [value]="term">
-        {{term}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="dropdown">
+      <mat-label>Academic Term</mat-label>
+      <mat-select formControlName="term">
+        <mat-option *ngFor="let term of terms" [value]="term">
+          {{term}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="dropdown">
-    <mat-label>Class</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let class of classes" [value]="class">
-        {{class}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="dropdown">
+      <mat-label>Class</mat-label>
+      <mat-select formControlName="class">
+        <mat-option *ngFor="let class of classes" [value]="class">
+          {{class}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="dropdown">
-    <mat-label>Professor</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let professor of professors" [value]="professor">
-        {{professor}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-</div>
-
-<div class="query">
-  <button class="button-primary">See Grade Distribution!</button>
+    <mat-form-field class="dropdown">
+      <mat-label>Professor</mat-label>
+      <mat-select formControlName="professor">
+        <option *ngFor="let professor of professors" [value]="professor">
+          {{ professor }}
+        </option>
+      </mat-select>
+    </mat-form-field>
+    
+<!-- Submits the query with given terms -->
+    <div class="query">
+      <button class="button-primary" type="submit" [disabled]="!searchForm.valid">See Grade Distribution!</button>
+    </div>
+  </form>
 </div>
 
 <div class="note">
   <p> Note: You will not see classes populate the search query if they do not have data submitted. Encourage your fellow TarHeels to use RamVision!</p>
 </div>
-
 
 
 

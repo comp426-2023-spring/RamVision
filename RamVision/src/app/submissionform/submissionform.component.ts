@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./submissionform.component.css']
 })
 export class SubmissionFormComponent {
-  years = [2023, 2022, 2021, 2020]; // add years as needed
-  professors = ['Professor 1', 'Professor 2', 'Professor 3']; // add professors as needed
+  years = [2023, 2022, 2021, 2020, 2019, 2018]; // add years as needed
   formData = {
     class: '',
     academicTerm: '',

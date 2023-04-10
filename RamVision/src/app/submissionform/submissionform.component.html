@@ -22,9 +22,7 @@
     </div>
     <div class="form-group">
       <label for="professor">Professor:</label>
-      <select class="form-control" id="professor" name="professor" required [(ngModel)]="formData.professor">
-        <option *ngFor="let professor of professors" [value]="professor">{{ professor }}</option>
-      </select>
+      <input type="text" class="form-control" id="professor" name="professor" required [(ngModel)]="formData.professor">
     </div>
     <div class="form-group">
       <label for="gradeReceived">Grade Received:</label>
@@ -37,6 +35,9 @@
         <!-- Display error message if form is invalid -->
         <div id="error-message" *ngIf="submissionForm.invalid">
           *You must fill out all fields before submitting*
+        </div>
+        <div id="error-message" *ngIf="submissionForm.invalid">
+          *Please enter professor first and last name. Double-check your spelling!*
         </div>
   </form>
   
