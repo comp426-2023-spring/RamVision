@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     // Subscribe to changes in the major form control to see the value as it changes in the form
     // Use this to take the value and build a query to ping database and fill out professor and class based on this...
 
-    // If the major is changed then update the values for class and prof
+    // If the major is changed then update the values for class
     majorControl.valueChanges.subscribe(value => {
       this.getClasses(value, this.searchForm.get('term'));
     });
