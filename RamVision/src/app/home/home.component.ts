@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,13 +16,16 @@ export class HomeComponent implements OnInit {
   professors = ['Kris Jordan', 'Brent Munsell', 'Shashank Srivastava'];
 
   searchForm = new FormGroup({
-    major: new FormControl('MAJOR', Validators.required),
-    term: new FormControl('TERM', Validators.required),
+    // major and term need default values to intially populate the query and fill class
+    // and professor. when they are changed the search bar will reload
+    major: new FormControl('AERO', Validators.required),
+    term: new FormControl('Fall 2021', Validators.required),
     class: new FormControl('CLASS', Validators.required),
     professor: new FormControl('PROFESSOR', Validators.required)
   });
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) { 
+  }
 
   ngOnInit(): void {
     const majorControl = this.searchForm.get('major')!;
@@ -30,29 +33,25 @@ export class HomeComponent implements OnInit {
     const classControl = this.searchForm.get('class')!;
     const professorControl = this.searchForm.get('professor')!;
 
-    
+    // populate the classes with the intial values
+    this.getClasses(this.searchForm.get('major')!.value, this.searchForm.get('term')!.value)
+
     // Subscribe to changes in the major form control to see the value as it changes in the form
     // Use this to take the value and build a query to ping database and fill out professor and class based on this...
-    this.searchForm.get('major')!.valueChanges.subscribe(value => {
-      // Log the value to the console
-      console.log(value);
+
+    // If the major is changed then update the values for class and prof
+    majorControl.valueChanges.subscribe(value => {
+      this.getClasses(value, this.searchForm.get('term'));
     });
 
-    // If the major is changed then reset the values for class and professor
-    majorControl.valueChanges.subscribe(() => {
-      classControl.setValue(null);
-      professorControl.setValue(null);
-    });
-
-    // If term changes then reset class and professor too
-    termControl.valueChanges.subscribe(() => {
-      classControl.setValue(null);
-      professorControl.setValue(null);
+    // If term changes then reset classes
+    termControl.valueChanges.subscribe(value => {
+      this.getClasses(this.searchForm.get('major'), value);
     });
 
     // If the class changes, reset professor
-    classControl.valueChanges.subscribe(() => {
-      professorControl.setValue(null);
+    classControl.valueChanges.subscribe(value => {
+      this.getProfessors(this.searchForm.get('major'), this.searchForm.get('term'), value);
     });
   }
 
@@ -64,4 +63,25 @@ export class HomeComponent implements OnInit {
       const professor = this.searchForm.get('professor')!.value;
     }
   }
+
+  getClasses(major: string | AbstractControl<string | null, string | null> | null, term: string | AbstractControl<string | null, string | null> | null){
+    // use major (value) & term
+    console.log(major)
+    console.log(term)
+    // TODO: make a GET request to query database and populate the dropdowns with the correct classes
+    // for a given major, and term
+    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/`
+  }
+
+  getProfessors(major: string | AbstractControl<string | null, string | null> | null, term: string | AbstractControl<string | null, string | null> | null, course: string | null | undefined){
+    // use major & term (value)
+    // console.log(major)
+    // console.log(term)
+    // console.log(course)
+    // TODO: make a GET request to query database and populate the dropdowns with the correct professors
+    // for a given major, term, and class
+    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/`
+
+  }
+
 }
