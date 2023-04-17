@@ -37,7 +37,7 @@ export class SubmissionFormComponent {
     console.log(submissionData);
     
     // Building the URL from the JSON
-    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.class}/${submissionData.professor}.json`;
+    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.class}/${this.formData.professor}.json`;
 
     // Make PUT call
     return this.http.put(url, submissionData);
