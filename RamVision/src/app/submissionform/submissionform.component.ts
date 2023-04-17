@@ -23,11 +23,13 @@ export class SubmissionFormComponent {
   // SubmitForm builds url and returns observable http req, it is called inside onSubmit
   submitForm() {
     // Create a JSON object from the form data
+    // Removed class, academic term, and other info to reduce redundancy in database
+    // only the grade is stored under the folder of the corresponding class information
     const submissionData = {
-      class: this.formData.class,
-      academicTerm: this.formData.academicTerm,
-      year: this.formData.year,
-      professor: this.formData.professor,
+      //class: this.formData.class,
+      //academicTerm: this.formData.academicTerm,
+      //year: this.formData.year,
+      //professor: this.formData.professor,
       gradeReceived: this.formData.gradeReceived
     };
     
@@ -35,7 +37,7 @@ export class SubmissionFormComponent {
     console.log(submissionData);
     
     // Building the URL from the JSON
-    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${submissionData.year}/${submissionData.academicTerm}/${submissionData.class}/${submissionData.professor}.json`;
+    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.class}/${submissionData.professor}.json`;
 
     // Make PUT call
     return this.http.put(url, submissionData);
