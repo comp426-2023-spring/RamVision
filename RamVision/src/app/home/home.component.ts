@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +26,7 @@ export class HomeComponent implements OnInit {
     professor: new FormControl('PROFESSOR', Validators.required)
   });
 
-  constructor(private router: Router) { 
+  constructor(private router: Router, private http: HttpClient) { 
   }
 
   ngOnInit(): void {
@@ -66,11 +68,26 @@ export class HomeComponent implements OnInit {
 
   getClasses(major: string | AbstractControl<string | null, string | null> | null, term: string | AbstractControl<string | null, string | null> | null){
     // use major (value) & term
-    console.log(major)
-    console.log(term)
+    var semester = ''
+    var year = ''
+    if (typeof term === 'string') {
+        semester = term.split(' ', 2)[0]
+	year = term.split(' ', 2)[1]
+    }
+    console.log(semester)
+    console.log(year)
     // TODO: make a GET request to query database and populate the dropdowns with the correct classes
     // for a given major, and term
     const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/`
+    //NOTE: Getting a CORS error here trying to make the request to the database, will fix
+    var temp = this.http.get(url).subscribe(
+	    res => {
+		    console.log(res)
+	    }, 
+	    err => {
+		    console.log(err)
+	    } )
+    console.log(temp)
   }
 
   getProfessors(major: string | AbstractControl<string | null, string | null> | null, term: string | AbstractControl<string | null, string | null> | null, course: string | null | undefined){
