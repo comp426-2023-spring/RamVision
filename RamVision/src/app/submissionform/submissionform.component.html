@@ -4,7 +4,13 @@
 
 <form (ngSubmit)="onSubmit(); submissionForm.reset()" #submissionForm="ngForm">
     <div class="form-group">
-      <label for="class">Class:</label>
+      <label for="major">Major:</label>
+      <select class="form-control" id="major" name="major" required [(ngModel)]="formData.major">
+        <option *ngFor="let major of majors" [value]="major">{{ major }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="class">Class Number:</label>
       <input type="text" class="form-control" id="class" name="class" required [(ngModel)]="formData.class">
     </div>
     <div class="form-group">

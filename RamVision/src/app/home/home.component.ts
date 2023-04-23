@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
     console.log(year)
     // TODO: make a GET request to query database and populate the dropdowns with the correct classes
     // for a given major, and term
-    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/`
+    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.searchForm.get('term')}/${this.classes}.json`
     //NOTE: Getting a CORS error here trying to make the request to the database, will fix
     var temp = this.http.get(url).subscribe(
 	    res => {
