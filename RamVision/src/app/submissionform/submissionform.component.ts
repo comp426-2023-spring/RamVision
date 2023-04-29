@@ -12,7 +12,7 @@ export class SubmissionFormComponent {
   years = [2023, 2022, 2021, 2020, 2019, 2018]; // add years as needed
   formData = {
     major: '',
-    class: '',
+    class: null,
     academicTerm: '',
     year: '',
     professor: '',
