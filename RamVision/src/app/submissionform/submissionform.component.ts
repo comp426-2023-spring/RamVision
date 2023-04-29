@@ -28,11 +28,11 @@ export class SubmissionFormComponent {
     // Removed class, academic term, and other info to reduce redundancy in database
     // only the grade is stored under the folder of the corresponding class information
     const submissionData = {
-      year: this.formData.year,
-      academicTerm: this.formData.academicTerm,
-      major: this.formData.major,
-      class: this.formData.class,
-      professor: this.formData.professor,
+      // year: this.formData.year,
+      // academicTerm: this.formData.academicTerm,
+      // major: this.formData.major,
+      // class: this.formData.class,
+      // professor: this.formData.professor,
       gradeReceived: this.formData.gradeReceived
     };
     
@@ -40,10 +40,19 @@ export class SubmissionFormComponent {
     console.log(submissionData);
     
     // Building the URL from the JSON
-    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.major}/${this.formData.class}/${this.formData.professor}/${this.formData.gradeReceived}.json`;
+    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.major}/${this.formData.class}/${this.formData.professor}.json`;
+    
+    // Start with an empty list of grades
+    let gradeList = []
+    // Update the grades with whatever is in the database
+    gradeList.push(this.http.get(url))
+    console.log("GRADES ARE" + gradeList)
+    // Then add in the grade that was just submitted
+    gradeList.push(this.formData.gradeReceived)
+    console.log("GRADES ARE" + gradeList)
 
     // Make PUT call
-    return this.http.put(url, submissionData);
+    return this.http.put(url, gradeList);
   }
 
   // onSubmit is what is tied to the front end button click, it will observe and tell us if successful or not
