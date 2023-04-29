@@ -43,14 +43,15 @@ export class SubmissionFormComponent {
     const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.major}/${this.formData.class}/${this.formData.professor}.json`;
     
     // Start with an empty list of grades
-    let gradeList = []
-    // Update the grades with whatever is in the database
-    gradeList.push(this.http.get(url))
-    console.log("GRADES ARE" + gradeList)
-    // Then add in the grade that was just submitted
-    gradeList.push(this.formData.gradeReceived)
-    console.log("GRADES ARE" + gradeList)
-
+    let gradeList = [80,85]
+    // console.log(this.http.get(url))
+    // // Update the grades with whatever is in the database
+    // gradeList.push(this.http.get(url))
+    // console.log("GRADES ARE" + gradeList)
+    // // Then add in the grade that was just submitted
+    // gradeList.push(this.formData.gradeReceived)
+    // console.log("GRADES ARE" + gradeList)
+    console.log(this.http.get(url))
     // Make PUT call
     return this.http.put(url, gradeList);
   }
