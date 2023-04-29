@@ -28,18 +28,19 @@ export class SubmissionFormComponent {
     // Removed class, academic term, and other info to reduce redundancy in database
     // only the grade is stored under the folder of the corresponding class information
     const submissionData = {
-      //class: this.formData.class,
-      //academicTerm: this.formData.academicTerm,
-      //year: this.formData.year,
-      //professor: this.formData.professor,
-      //gradeReceived: this.formData.gradeReceived
+      year: this.formData.year,
+      academicTerm: this.formData.academicTerm,
+      major: this.formData.major,
+      class: this.formData.class,
+      professor: this.formData.professor,
+      gradeReceived: this.formData.gradeReceived
     };
     
     // For testing
     console.log(submissionData);
     
     // Building the URL from the JSON
-    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.major}/${this.formData.class}/${this.formData.professor}.json`;
+    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.major}/${this.formData.class}/${this.formData.professor}/${this.formData.gradeReceived}.json`;
 
     // Make PUT call
     return this.http.put(url, submissionData);
