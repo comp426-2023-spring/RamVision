@@ -19,10 +19,19 @@
     </mat-form-field>
 
     <mat-form-field class="dropdown">
-      <mat-label>Academic Term</mat-label>
-      <mat-select formControlName="term">
-        <mat-option *ngFor="let term of terms" [value]="term">
-          {{term}}
+      <mat-label>Semester</mat-label>
+      <mat-select formControlName="semester">
+        <mat-option *ngFor="let semester of semesters" [value]="semester">
+          {{semester}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="dropdown">
+      <mat-label>Year</mat-label>
+      <mat-select formControlName="year">
+        <mat-option *ngFor="let year of years" [value]="year">
+          {{year}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -39,9 +48,9 @@
     <mat-form-field class="dropdown">
       <mat-label>Professor</mat-label>
       <mat-select formControlName="professor">
-        <option *ngFor="let professor of professors" [value]="professor">
+        <mat-option *ngFor="let professor of professors" [value]="professor">
           {{ professor }}
-        </option>
+        </mat-option>
       </mat-select>
     </mat-form-field>
     

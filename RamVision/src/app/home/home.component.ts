@@ -11,17 +11,19 @@ import { Observable } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
   majors = ['AERO', 'AAAD', 'AMST', 'ANTH', 'APPL', 'ARAB', 'ARCH', 'ARMY', 'ARTH', 'ASIA', 'ASTR', 'BIOC', 'BCB', 'BBSP', 'BIOL', 'BMME', 'BIOS', 'BCS', 'BUSI', 'CHIP', 'CATA', 'CBIO', 'CBPH', 'CBMC', 'CHEM', 'CHER', 'CHWA', 'CHIN', 'PLAN', 'CLAR', 'CLAS', 'CLSC', 'CRMH', 'COMM', 'CMPL', 'COMP', 'EURO', 'CZCH', 'DENG', 'DHYG', 'DHED', 'DRAM', 'DTCH', 'ECON', 'EDUC', 'ENDO', 'ENGL', 'ENEC', 'ENVR', 'EPID', 'EXSS', 'EDMX', 'SPCL', 'DPET', 'FOLK', 'FREN', 'GNET', 'GEOG', 'GEOL', 'GERM', 'GSLL', 'GLBL', 'GOVT', 'GRAD', 'GREK', 'HBEH', 'HPM', 'HEBR', 'HNUR', 'HIST', 'HUNG', 'INLS', 'IDST', 'ITAL', 'JAPN', 'JWST', 'SWAH', 'KOR', 'LTAM', 'LATN', 'LFIT', 'LGLA', 'LING', 'MACD', 'MNGT', 'MASC', 'MTSC', 'MHCH', 'MATH', 'MEJO', 'MCRO', 'MUSC', 'NAVS', 'NBIO', 'NSCI', 'NURS', 'NUTR', 'OCSC', 'OCCT', 'OPER', 'ORPA', 'ORAD', 'ORTH', 'PATH', 'PWAD', 'PEDO', 'PERI', 'PRSN', 'PHRS', 'DPMP', 'PHCO', 'NON-DEPARTMENTAL', 'PHCY', 'DPOP', 'DPPE', 'PHIL', 'PHYA', 'PHYS', 'PHYI', 'PLSH', 'POLI', 'PORT', 'PACE', 'PROS', 'PSYC', 'PUBA', 'PUBH', 'PLCY', 'RADI', 'RECR', 'RELI', 'ROML', 'RUSS', 'SPHG', 'SLAV', 'SOWO', 'SOCI', 'SPAN', 'SPHS', 'STOR', 'ARTS', 'TOXC', 'TURK', 'UKRN', 'URES', 'VIET', 'WOLO', 'WGST', 'YORU', 'MAYA'];
-  terms = ['Fall 2021', 'Spring 2023'];
+  semesters = ['Fall', 'Spring'];
+  years = [2023, 2022, 2021, 2020, 2019, 2018]
   // Classes should be dynamically rendered based on major & term selection...
-  classes = ['CS101', 'EE201', 'ME301'];
+  classes: string[] = [];
   // Professors should be dynamically rendered based on major & term & class...
-  professors = ['Kris Jordan', 'Brent Munsell', 'Shashank Srivastava'];
+  professors: string[] = [];
 
   searchForm = new FormGroup({
     // major and term need default values to intially populate the query and fill class
     // and professor. when they are changed the search bar will reload
     major: new FormControl('AERO', Validators.required),
-    term: new FormControl('Fall 2021', Validators.required),
+    semester: new FormControl('Fall', Validators.required),
+    year: new FormControl(2023, Validators.required),
     class: new FormControl('CLASS', Validators.required),
     professor: new FormControl('PROFESSOR', Validators.required)
   });
@@ -31,74 +33,73 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     const majorControl = this.searchForm.get('major')!;
-    const termControl = this.searchForm.get('term')!;
+    const semesterControl = this.searchForm.get('semester')!;
+    const yearControl = this.searchForm.get('year')!;
     const classControl = this.searchForm.get('class')!;
     const professorControl = this.searchForm.get('professor')!;
 
     // populate the classes with the intial values
-    this.getClasses(this.searchForm.get('major')!.value, this.searchForm.get('term')!.value)
+    this.getClasses();
 
     // Subscribe to changes in the major form control to see the value as it changes in the form
     // Use this to take the value and build a query to ping database and fill out professor and class based on this...
 
     // If the major is changed then update the values for class
-    majorControl.valueChanges.subscribe(value => {
-      this.getClasses(value, this.searchForm.get('term'));
-    });
-
+    majorControl.valueChanges.subscribe(() => this.getClasses);
     // If term changes then reset classes
-    termControl.valueChanges.subscribe(value => {
-      this.getClasses(this.searchForm.get('major'), value);
-    });
+    semesterControl.valueChanges.subscribe(() => this.getClasses);
+    // If year changes
+    yearControl.valueChanges.subscribe(() => this.getClasses);
 
-    // If the class changes, reset professor
-    classControl.valueChanges.subscribe(value => {
-      this.getProfessors(this.searchForm.get('major'), this.searchForm.get('term'), value);
-    });
+    // if anything changes, reset professor
+    majorControl.valueChanges.subscribe(() => this.getProfessors());
+    semesterControl.valueChanges.subscribe(() => this.getProfessors());
+    yearControl.valueChanges.subscribe(() => this.getProfessors());
+    classControl.valueChanges.subscribe(() => this.getProfessors());
   }
 
   onSubmit() {
     if (this.searchForm.valid) {
       const major = this.searchForm.get('major')!.value;
-      const term = this.searchForm.get('term')!.value;
+      const semester = this.searchForm.get('semester')!.value;
+      const year = this.searchForm.get('year')!.value;
       const selectedClass = this.searchForm.get('class')!.value;
       const professor = this.searchForm.get('professor')!.value;
     }
   }
 
-  getClasses(major: string | AbstractControl<string | null, string | null> | null, term: string | AbstractControl<string | null, string | null> | null){
-    // use major (value) & term
-    var semester = ''
-    var year = ''
-    if (typeof term === 'string') {
-        semester = term.split(' ', 2)[0]
-	year = term.split(' ', 2)[1]
-    }
-    console.log(semester)
-    console.log(year)
-    // TODO: make a GET request to query database and populate the dropdowns with the correct classes
-    // for a given major, and term
-    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.searchForm.get('term')}/${this.classes}.json`
-    //NOTE: Getting a CORS error here trying to make the request to the database, will fix
-    var temp = this.http.get(url).subscribe(
-	    res => {
-		    console.log(res)
-	    }, 
-	    err => {
-		    console.log(err)
-	    } )
-    console.log(temp)
-  }
+  getClasses(){
+    // Takes a major value and term and constructs appropriate url for get request
+    // Empty the classes we have loaded for now
+    this.classes = []
+    const url =  `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.searchForm.get('year')!.value}/${this.searchForm.get('semester')!.value}/${this.searchForm.get('major')!.value}/.json`
+    console.log(url)
+    this.http.get<any>(url).subscribe((data: { [key: string]: string }) => {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const class_i = key;
+          // Add the class value to the class array
+          this.classes.push(class_i);
+        }
+      }
+  });
+}
 
-  getProfessors(major: string | AbstractControl<string | null, string | null> | null, term: string | AbstractControl<string | null, string | null> | null, course: string | null | undefined){
-    // use major & term (value)
-    // console.log(major)
-    // console.log(term)
-    // console.log(course)
-    // TODO: make a GET request to query database and populate the dropdowns with the correct professors
-    // for a given major, term, and class
-    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/`
-
+  getProfessors(){
+    // Takes a major value and term and constructs appropriate url for get request
+    // Empty loaded professors
+    this.professors = []
+    const url =  `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.searchForm.get('year')!.value}/${this.searchForm.get('semester')!.value}/${this.searchForm.get('major')!.value}/${this.searchForm.get('class')!.value}/.json`
+    console.log(url)
+    this.http.get<any>(url).subscribe((data: { [key: string]: string }) => {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const professor = key;
+          // Add the professor value to the professor array
+          this.professors.push(professor);
+        }
+      }
+    });
   }
 
 }
