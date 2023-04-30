@@ -45,11 +45,11 @@ export class HomeComponent implements OnInit {
     // Use this to take the value and build a query to ping database and fill out professor and class based on this...
 
     // If the major is changed then update the values for class
-    majorControl.valueChanges.subscribe(() => this.getClasses);
+    majorControl.valueChanges.subscribe(() => this.getClasses());
     // If term changes then reset classes
-    semesterControl.valueChanges.subscribe(() => this.getClasses);
+    semesterControl.valueChanges.subscribe(() => this.getClasses());
     // If year changes
-    yearControl.valueChanges.subscribe(() => this.getClasses);
+    yearControl.valueChanges.subscribe(() => this.getClasses());
 
     // if anything changes, reset professor
     majorControl.valueChanges.subscribe(() => this.getProfessors());
@@ -83,6 +83,7 @@ export class HomeComponent implements OnInit {
           }
         }
 
+        console.log(grades)
         // Should take in the grades and render a graph
         this.renderStats();
     });
