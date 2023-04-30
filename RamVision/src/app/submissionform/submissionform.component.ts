@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import 'rxjs'
 
 @Component({
   selector: 'app-submissionform',
@@ -16,58 +16,47 @@ export class SubmissionFormComponent {
     academicTerm: '',
     year: '',
     professor: '',
-    gradeReceived: null
+    gradeReceived: 0
   };
 
   // Http client for sending requests etc.
   constructor(private http: HttpClient) {}
 
-  // SubmitForm builds url and returns observable http req, it is called inside onSubmit
+  // SubmitForm updates database
   submitForm() {
     // Create a JSON object from the form data
-    // Removed class, academic term, and other info to reduce redundancy in database
-    // only the grade is stored under the folder of the corresponding class information
     const submissionData = {
-      // year: this.formData.year,
-      // academicTerm: this.formData.academicTerm,
-      // major: this.formData.major,
-      // class: this.formData.class,
-      // professor: this.formData.professor,
       gradeReceived: this.formData.gradeReceived
     };
-    
-    // For testing
-    console.log(submissionData);
     
     // Building the URL from the JSON
     const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.major}/${this.formData.class}/${this.formData.professor}.json`;
     
-    // Start with an empty list of grades
-    let gradeList = [80,85]
-    // console.log(this.http.get(url))
-    // // Update the grades with whatever is in the database
-    // gradeList.push(this.http.get(url))
-    // console.log("GRADES ARE" + gradeList)
-    // // Then add in the grade that was just submitted
-    // gradeList.push(this.formData.gradeReceived)
-    // console.log("GRADES ARE" + gradeList)
-    console.log(this.http.get(url))
-    // Make PUT call
-    return this.http.put(url, gradeList);
-  }
+    // Create an empty list to store the grades
+    const grades: number[] = [];
 
-  // onSubmit is what is tied to the front end button click, it will observe and tell us if successful or not
-  onSubmit() {
-    this.submitForm().subscribe(
-      res => {
-        console.log('Data successfully updated in Firebase!');
-        console.log(res);
-      },
-      err => {
-        console.log('Error updating data in Firebase:');
-        console.log(err);
+    // Get the grades that are currently there for a professor
+    this.http.get<any>(url).subscribe((data: { [key: number]: number }) => {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const grade = data[key];
+          // Add the grade value to the grades array
+          grades.push(grade);
+        }
       }
-    );
-  }
 
+      console.log("current grades are " + grades);
+      // Add the new grade into the existing array that we just collected above
+      grades.push(submissionData['gradeReceived']);
+      console.log("updated grades are " + grades);
+
+      // Put the new grades into the database
+      this.http.put(url, grades).subscribe(response => {
+        console.log("Successfully updated grades in database");
+      }, error => {
+        console.log("Error updating grades in database: " + error.message);
+      });
+    });
+  }
+  
 }

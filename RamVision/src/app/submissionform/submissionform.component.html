@@ -2,7 +2,7 @@
     <h1>Grade Submission Form</h1>
   </div>
 
-<form (ngSubmit)="onSubmit(); submissionForm.reset()" #submissionForm="ngForm">
+<form (ngSubmit)="submitForm(); submissionForm.reset()" #submissionForm="ngForm">
     <div class="form-group">
       <label for="major">Major:</label>
       <select class="form-control" id="major" name="major" required [(ngModel)]="formData.major">
