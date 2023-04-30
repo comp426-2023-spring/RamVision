@@ -65,8 +65,29 @@ export class HomeComponent implements OnInit {
       const year = this.searchForm.get('year')!.value;
       const selectedClass = this.searchForm.get('class')!.value;
       const professor = this.searchForm.get('professor')!.value;
-    }
+
+
+      // Building the URL from the JSON
+      const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${year}/${semester}/${major}/${selectedClass}/${professor}.json`;
+      
+      // Create an empty list to store the grades
+      const grades: number[] = [];
+
+      // Get the grades that are currently there for a professor
+      this.http.get<any>(url).subscribe((data: { [key: number]: number }) => {
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            const grade = data[key];
+            // Add the grade value to the grades array
+            grades.push(grade);
+          }
+        }
+
+        // Should take in the grades and render a graph
+        this.renderStats();
+    });
   }
+}
 
   getClasses(){
     // Takes a major value and term and constructs appropriate url for get request
@@ -100,6 +121,11 @@ export class HomeComponent implements OnInit {
         }
       }
     });
+  }
+
+
+  renderStats(){
+    // Add in functionality to render graph and stats based on OnSubmit() query
   }
 
 }
