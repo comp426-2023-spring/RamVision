@@ -30,7 +30,7 @@ export class SubmissionFormComponent {
     };
     
     // Building the URL from the JSON
-    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.major}/${this.formData.class}/${this.formData.professor}.json`;
+    const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${this.formData.year}/${this.formData.academicTerm}/${this.formData.major}/${this.formData.class}/${this.formData.professor.toLocaleLowerCase()}.json`;
     
     // Create an empty list to store the grades
     const grades: number[] = [];
