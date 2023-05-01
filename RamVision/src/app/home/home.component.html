@@ -57,13 +57,18 @@
 <!-- Submits the query with given terms -->
     <div class="query">
       <button class="button-primary" type="submit" [disabled]="!searchForm.valid">See Grade Distribution!</button>
+      <button type="button" (click)="onClear()">Reset</button>
     </div>
   </form>
 </div>
 
+<div class="message-container" *ngIf="displaymessage">
+  <p>Grade distribution for professor {{this.searchForm.get('professor')!.value}}'s {{this.searchForm.get('major')!.value}} {{this.searchForm.get('class')!.value}} class in the {{this.searchForm.get('semester')!.value}} of {{this.searchForm.get('year')!.value}}</p>
+</div>
 
-<app-graph></app-graph>
-
+<div class="chart-container" *ngIf="displaymessage">
+  <canvas  id="MyChart" >{{ chart }}</canvas>
+</div>
 
 <div class="note">
   <p> Note: You will not see classes populate the search query if they do not have data submitted. Encourage your fellow TarHeels to use RamVision!</p>

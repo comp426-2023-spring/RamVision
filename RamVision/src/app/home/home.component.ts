@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,10 @@ export class HomeComponent implements OnInit {
   classes: string[] = [];
   // Professors should be dynamically rendered based on major & term & class...
   professors: string[] = [];
+  // Chart to display our grades
+  public chart: any;
+  // boolean to display message
+  displaymessage = false;
 
   searchForm = new FormGroup({
     // major and term need default values to intially populate the query and fill class
@@ -65,16 +70,16 @@ export class HomeComponent implements OnInit {
       const year = this.searchForm.get('year')!.value;
       const selectedClass = this.searchForm.get('class')!.value;
       const professor = this.searchForm.get('professor')!.value;
-
+      this.displaymessage = true;
 
       // Building the URL from the JSON
       const url = `https://ramvision-ecaa0-default-rtdb.firebaseio.com/${year}/${semester}/${major}/${selectedClass}/${professor}.json`;
       
       // Create an empty list to store the grades
-      const grades: number[] = [];
+      const grades: string[] = [];
 
       // Get the grades that are currently there for a professor
-      this.http.get<any>(url).subscribe((data: { [key: number]: number }) => {
+      this.http.get<any>(url).subscribe((data: { [key: string]: string }) => {
         for (const key in data) {
           if (data.hasOwnProperty(key)) {
             const grade = data[key];
@@ -83,9 +88,8 @@ export class HomeComponent implements OnInit {
           }
         }
 
-        console.log(grades)
-        // Should take in the grades and render a graph
-        this.renderStats();
+        // Render the graph based on the grades
+        this.createChart(grades);
     });
   }
 }
@@ -124,9 +128,41 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  createChart(grades: string[]){
+    const letter_grades =  ["F","D","D+", "C-","C", "C+", "B-", "B", "B+", "A-", "A"];
+    const colors = ["#F44336", "#FB8C00", "#FFB74D", "#FFD54F", "#FFEB3B", "#F0F4C3", "#DCEDC8", "#A5D6A7", "#66BB6A", "#43A047", "#006064 "];
+    const grade_count: number[] = new Array(11).fill(0);
+    // fill out the number of grades
+    for(const grade of grades) {
+      let index = letter_grades.indexOf(grade);
+      grade_count[index]++;
+    }
+  
+    this.chart = new Chart("MyChart", {
+      type: 'bar', //this denotes tha type of chart
 
-  renderStats(){
-    // Add in functionality to render graph and stats based on OnSubmit() query
+      data: {// values on X-Axis
+        labels: letter_grades, 
+	       datasets: [
+          {
+            label: "Grades",
+            // The index of the data corresponds to the index of the labels
+            data: grade_count,
+            backgroundColor: colors
+          }
+        ]
+      },
+      options: {
+        aspectRatio:2.5
+      }
+      
+    });
+  }
+
+  // To reset query search
+  onClear(){
+    this.displaymessage = false;
+    this.searchForm.reset();
   }
 
 }
