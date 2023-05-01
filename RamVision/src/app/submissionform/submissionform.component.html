@@ -32,7 +32,9 @@
     </div>
     <div class="form-group">
       <label for="gradeReceived">Grade Received:</label>
-      <input type="number" class="form-control" id="gradeReceived" name="gradeReceived" required [(ngModel)]="formData.gradeReceived">
+      <select class="form-control" id="gradeReceived" name="gradeReceived" required [(ngModel)]="formData.gradeReceived">
+        <option *ngFor="let grade of lettergrades" [value]="grade">{{ grade }}</option>
+      </select>
     </div>
     <div class="button-group">
         <button type="home" routerLink="/home" class="btn btn-secondary">Home</button>

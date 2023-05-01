@@ -11,12 +11,14 @@ import { HomeComponent } from './home/home.component';
 import { SubmissionFormComponent } from './submissionform/submissionform.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GraphComponent } from './graph/graph.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SubmissionFormComponent
+    SubmissionFormComponent,
+    GraphComponent
   ],
   imports: [
     BrowserModule,
