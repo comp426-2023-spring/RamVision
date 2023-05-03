@@ -22,8 +22,9 @@ tslib
 zone.js
 angular-devkit/build-angular -> Angular build tools
 angular-cli -> Angular CLI tools
-angular-compiler-cli -> Angular compiler CLI
-@types/jasmine" -> Packages to support the Jasmine test library 
+angular-compiler-cli -> Angular compiler CLI  
+
+@types/jasmine" -> Packages to support the Jasmine test library  
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
