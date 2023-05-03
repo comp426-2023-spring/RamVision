@@ -1,4 +1,4 @@
-##API Endpoints:
+## API Endpoints:
 
 1) Display the home page:  
    a) Path: '' or 'home'  
