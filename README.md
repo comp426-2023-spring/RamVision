@@ -39,7 +39,9 @@ angular-compiler-cli -> Angular compiler CLI
 
 ## Development server
 
+Run 'npm install' to install dependencies
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+** To run code, please use ng serve instead of npm run as this was written using angular **
 
 ## Code scaffolding
 
