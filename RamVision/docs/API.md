@@ -1,7 +1,7 @@
 API Endpoints:
 
 1) Display the home page:
-   a) Path: '' or 'home'
+   a) Path: '' or 'home'  
    b) Function: Renders the home component of the API where the user can view various grade distributions
 2) Display the submission component form:
    a) Path: 'submissionform'
