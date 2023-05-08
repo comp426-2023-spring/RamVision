@@ -130,7 +130,6 @@ app.delete('/app/delete/:year/:semester/:major/:course/:prof/:grade', (req, res)
                     res.status(200).send(JSON.stringify("Successfully deleted")).end();
                     return;
                 }
-                index++;
             }
             res.status(400).send(JSON.stringify("Could not find specified grade to remove.")).end()
         });
