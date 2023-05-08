@@ -8,7 +8,7 @@
    b) Function: Renders the submission form component of the API where the user can submit grades  
    
 3) Fetch data for grades currently present in database for professor:  
-   a) Path: app.get('/app/grades')
+   a) Path: app.get('/app/grades')  
    b) Function: Obtain grades from firebase that are currently present for a particular professor   
 4) Input new grade into the database  
    a) Path: app.post('/app/add/:year/:semester/:major/:course/:prof/:grade')  
