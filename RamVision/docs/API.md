@@ -22,4 +22,4 @@
    c) Function: Obtain the different professors teaching a particular class from Firebase  
    d) Link to code: https://github.com/comp426-2023-spring/a99-RamVision/blob/b9df5dd135d0825bad789da7f9fc18677cdc9ddf/RamVision/src/app/home/home.component.ts#L132
    
-Components of the Web page were not displayed using an API and the API was only used to obtain data from the backend firebase database
+** Components of the Web page were not displayed using an API and the API was only used to obtain data from the backend firebase database **
