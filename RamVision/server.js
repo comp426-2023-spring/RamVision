@@ -93,7 +93,7 @@ app.post('/app/add/:year/:semester/:major/:course/:prof/:grade', (req, res) => {
     request.end()
 });
 
-app.delete('/app/delete/:year/:semester/:major/:course/:prof/:grade/.json', (req, res) => {
+app.delete('/app/delete/:year/:semester/:major/:course/:prof/:grade/', (req, res) => {
     if (req == undefined ||
         req.params === undefined ||
         req.params.year == undefined ||
