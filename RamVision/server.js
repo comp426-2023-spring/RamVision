@@ -37,10 +37,13 @@ app.get('/app/grades', (req, res) => {
                 res.status(200).send(JSON.stringify("There are no grades entered for this course and professor yet!")).end()
                 return;
             }
-            res.status(200).send(JSON.stringify(body)).end()
+            output = []
+            for (var grade in body){
+                output.push(body[grade])
+            }
+            res.status(200).send(JSON.stringify(output)).end()
         });
     })
-    console.log(request)
     request.on('error', (error) => {
         console.log('An error occured', error);
     });
@@ -61,9 +64,11 @@ app.post('/app/add/:year/:semester/:major/:course/:prof/:grade', (req, res) => {
 
     var options = {
         host: url.substring('https://'.length, url.length - 1),
-        path: "/" + req.params.year + "/" + req.params.semester + "/" + req.params.major + "/" + req.params.course + "/" + req.params.prof + "/" + req.params.grade + "/.json",
+        path: "/" + req.params.year + "/" + req.params.semester + "/" + req.params.major + "/" + req.params.course + "/" + req.params.prof + "/.json",
         method: 'POST',
     }
+
+    const data = JSON.stringify(req.params.grade)
 
     const request = https.request(options, (response) => {
         let data = '';
@@ -84,12 +89,11 @@ app.post('/app/add/:year/:semester/:major/:course/:prof/:grade', (req, res) => {
     request.on('error', (error) => {
         console.log('An error occured', error);
     });
-    
+    request.write(data)
     request.end()
 });
 
 app.delete('/app/delete/:year/:semester/:major/:course/:prof/:grade/.json', (req, res) => {
-    console.log('started')
     if (req == undefined ||
         req.params === undefined ||
         req.params.year == undefined ||
@@ -101,7 +105,6 @@ app.delete('/app/delete/:year/:semester/:major/:course/:prof/:grade/.json', (req
             res.status(422).send(JSON.stringify("Error: Invalid parameters. Include year, semester, major, course number, professor, and grade.")).end()
             return;
     }
-    console.log('params identified')
     newURL = url + req.params.year + "/" + req.params.semester + "/" + req.params.major + "/" + req.params.course + "/" + req.params.prof + "/.json"
     const firstRequest = https.request(newURL, (response) => {
         let data = '';
@@ -111,20 +114,15 @@ app.delete('/app/delete/:year/:semester/:major/:course/:prof/:grade/.json', (req
       
         response.on('end', () => {
             var grades = JSON.parse(data);
-            var index = 0;
             for (let grade in grades){
                 if (grades[grade] == req.params.grade){
-                    console.log('grade found at ' + index)
                     // Send the delete request now that we know the right grade index
                     var options = {
                         host: url.substring('https://'.length, url.length - 1),
-                        path: ("/"+req.params.year + "/" + req.params.semester + "/" + req.params.major + "/" + req.params.course + "/" + req.params.prof + "/" + index + ".json"),
+                        path: ("/"+req.params.year + "/" + req.params.semester + "/" + req.params.major + "/" + req.params.course + "/" + req.params.prof + "/" + grade + ".json"),
                         method: 'DELETE',
                     }
-                    var request = https.request(options, (res2) => {
-                        res2.on('data', (d) => {console.log(d)}) //should only ever log null
-                        res.on('end', (d) => {console.log(d)})
-                    })
+                    var request = https.request(options, (res2) => {}) //should only ever get response null from server
                     request.on('error', (e) => {
                         console.log('An error occured: ', e)
                     })
